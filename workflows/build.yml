@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # 你可以选择运行在哪个平台，ubuntu-latest 适用于 Linux
+    runs-on: ubuntu-22.04  # 你可以选择运行在哪个平台，ubuntu-latest 适用于 Linux
 
     steps:
       - name: Checkout code
