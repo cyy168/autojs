@@ -1,0 +1,41 @@
+name: Build Node.js Koa Service Binary
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+  pull_request:
+    branches:
+      - main  # 当 PR 推送到 main 分支时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04  # 你可以选择运行在哪个平台，ubuntu-latest 适用于 Linux
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # 设置 Node.js 版本
+
+      # 安装依赖
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # 构建二进制文件
+      - name: Build Koa Service Binary
+        run: |
+          npx pkg . --targets node16-linux-x64 --output dist/koa-service-linux
+
+      # 上传构建好的二进制文件
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: koa-service-linux
+          path: dist/koa-service-linux
